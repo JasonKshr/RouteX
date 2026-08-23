@@ -280,11 +280,7 @@ export default function Home() {
     <main className="workspace">
       <section className="control-panel" aria-label="Route controls">
         <div className="brand-row">
-          <div>
-            <p className="eyebrow">OpenStreetMap route engine</p>
-            <h1>RouteX</h1>
-          </div>
-          <span className="engine-pill">C++ Dijkstra + A*</span>
+          <h1>RouteX</h1>
         </div>
 
         <div className="selector-grid">

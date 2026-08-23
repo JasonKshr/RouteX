@@ -98,14 +98,6 @@ button:disabled {
   gap: 1rem;
 }
 
-.eyebrow {
-  margin: 0 0 0.35rem;
-  color: var(--green-2);
-  font-size: 0.75rem;
-  font-weight: 800;
-  text-transform: uppercase;
-}
-
 h1,
 h2,
 p {
@@ -121,17 +113,6 @@ h1 {
 h2 {
   margin-bottom: 0.75rem;
   font-size: 1rem;
-}
-
-.engine-pill {
-  flex: 0 0 auto;
-  border: 1px solid #9ecfbe;
-  border-radius: 999px;
-  padding: 0.45rem 0.7rem;
-  background: #e4f6ef;
-  color: var(--green-2);
-  font-size: 0.78rem;
-  font-weight: 800;
 }
 
 .selector-grid,

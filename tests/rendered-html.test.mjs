@@ -45,7 +45,7 @@ test("ships RouteX architecture and algorithm source", async () => {
     readFile(new URL("../backend/app/main.py", import.meta.url), "utf8"),
   ]);
 
-  assert.match(page, /OpenStreetMap route engine/);
+  assert.match(page, /<h1>RouteX<\/h1>/);
   assert.match(page, /calculateRoute/);
   assert.match(page, /Closure mode/);
   assert.match(page, /Algorithm Comparison/);
@@ -55,7 +55,7 @@ test("ships RouteX architecture and algorithm source", async () => {
   assert.match(astar, /heuristic/);
   assert.match(dijkstra, /std::priority_queue/);
   assert.match(api, /FastAPI/);
-  assert.doesNotMatch(page, /AES-GCM|PBKDF2|indexedDB/);
+  assert.doesNotMatch(page, /AES-GCM|PBKDF2|indexedDB|OpenStreetMap route engine|C\+\+ Dijkstra \+ A\*/);
 });
 
 test("keeps closure-mode road edges clickable", async () => {
