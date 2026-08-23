@@ -406,8 +406,9 @@ export default function Home() {
                   role="button"
                   tabIndex={0}
                   aria-label={`${isClosed ? "Reopen" : "Close"} ${road.name}`}
-                  onClick={() => {
+                  onClick={(event) => {
                     if (closureMode) {
+                      event.stopPropagation();
                       toggleRoadClosure(road.id);
                     }
                   }}
@@ -460,6 +461,13 @@ export default function Home() {
               ? "Click a road segment to close or reopen it."
               : "Click a node on the map to update the selected endpoint."}
           </span>
+          {closureMode ? (
+            <em>
+              {closedRoadIds.size === 0
+                ? "No roads closed yet"
+                : `${closedRoadIds.size} road${closedRoadIds.size === 1 ? "" : "s"} closed`}
+            </em>
+          ) : null}
         </div>
         <a className="osm-credit" href="https://www.openstreetmap.org/copyright">
           OpenStreetMap
