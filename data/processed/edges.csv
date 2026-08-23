@@ -1,18 +1,24 @@
 source,destination,distance,road_id,bidirectional,name
-1001,1002,161.2,5001,true,McCormick Road
-1002,1003,164.6,5002,true,McCormick Road
-1003,1004,174.8,5003,true,University Avenue
-1004,1005,169.2,5004,true,University Avenue
-1005,1012,197.4,5005,true,Main Street
-1001,1009,158.8,5006,true,Rugby Road
-1009,1008,193.5,5007,true,Rugby Road
-1008,1007,203.3,5008,true,Emmet Street
-1007,1006,223.6,5009,true,Jefferson Park Avenue
-1006,1005,199.8,5010,true,Jefferson Park Avenue
-1002,1010,159.5,5011,true,Hospital Drive
-1010,1011,207.7,5012,true,Hospital Drive
-1011,1004,218.4,5013,true,14th Street
-1008,1003,292.2,5014,true,Elliewood Connector
-1007,1003,144.5,5015,true,Library Walk
-1006,1004,253.7,5016,true,Monroe Lane
-1004,1012,282.6,5017,false,Eastbound Main Street
+1002,1001,10432.892,5001,true,Dulles Greenway
+1001,1003,8625.333,5002,true,Dulles Toll Road
+1003,1004,12466.352,5003,true,Dulles Toll Road
+1004,1006,6001.071,5004,true,Route 7
+1006,1007,5573.301,5005,true,Arlington Boulevard
+1007,1008,4485.077,5006,true,I-395
+1008,1009,2306.820,5007,true,George Washington Parkway
+1009,1010,5220.631,5008,true,George Washington Parkway
+1010,1015,12280.228,5009,true,Capital Beltway
+1015,1014,15553.310,5010,true,I-95
+1003,1011,13243.109,5011,true,Fairfax County Parkway
+1011,1012,1706.236,5012,true,Braddock Road
+1012,1013,17018.438,5013,true,VA-234
+1013,1014,22124.222,5014,true,Prince William Parkway
+1011,1004,10861.929,5015,true,Route 123
+1011,1005,8036.540,5016,true,I-66
+1005,1015,9617.088,5017,true,Capital Beltway
+1015,1008,13746.518,5018,true,I-395
+1013,1001,22542.476,5019,true,VA-28
+1002,1003,14721.657,5020,true,Waxpool Road
+1005,1006,4360.147,5021,true,Gallows Road
+1004,1007,10895.326,5022,true,I-66
+1007,1009,6770.106,5023,true,George Washington Parkway

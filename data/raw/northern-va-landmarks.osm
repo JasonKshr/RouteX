@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<osm version="0.6" generator="RouteX sample">
+  <node id="1001" lat="38.9531000" lon="-77.4565000"><tag k="name" v="Dulles Airport" /></node>
+  <node id="1002" lat="39.0438000" lon="-77.4874000"><tag k="name" v="Ashburn" /></node>
+  <node id="1003" lat="38.9586000" lon="-77.3570000"><tag k="name" v="Reston" /></node>
+  <node id="1004" lat="38.9187000" lon="-77.2223000"><tag k="name" v="Tysons" /></node>
+  <node id="1005" lat="38.8720000" lon="-77.2197000"><tag k="name" v="Mosaic District" /></node>
+  <node id="1006" lat="38.8823000" lon="-77.1711000"><tag k="name" v="Falls Church" /></node>
+  <node id="1007" lat="38.8797000" lon="-77.1068000"><tag k="name" v="Arlington" /></node>
+  <node id="1008" lat="38.8629000" lon="-77.0597000"><tag k="name" v="Pentagon City" /></node>
+  <node id="1009" lat="38.8512000" lon="-77.0377000"><tag k="name" v="Reagan National" /></node>
+  <node id="1010" lat="38.8048000" lon="-77.0469000"><tag k="name" v="Alexandria" /></node>
+  <node id="1011" lat="38.8462000" lon="-77.3064000"><tag k="name" v="Fairfax" /></node>
+  <node id="1012" lat="38.8309000" lon="-77.3079000"><tag k="name" v="George Mason" /></node>
+  <node id="1013" lat="38.7509000" lon="-77.4753000"><tag k="name" v="Manassas" /></node>
+  <node id="1014" lat="38.6582000" lon="-77.2497000"><tag k="name" v="Woodbridge" /></node>
+  <node id="1015" lat="38.7893000" lon="-77.1872000"><tag k="name" v="Springfield" /></node>
+
+  <way id="5001"><nd ref="1002" /><nd ref="1001" /><tag k="highway" v="motorway" /><tag k="name" v="Dulles Greenway" /></way>
+  <way id="5002"><nd ref="1001" /><nd ref="1003" /><tag k="highway" v="motorway" /><tag k="name" v="Dulles Toll Road" /></way>
+  <way id="5003"><nd ref="1003" /><nd ref="1004" /><tag k="highway" v="motorway" /><tag k="name" v="Dulles Toll Road" /></way>
+  <way id="5004"><nd ref="1004" /><nd ref="1006" /><tag k="highway" v="primary" /><tag k="name" v="Route 7" /></way>
+  <way id="5005"><nd ref="1006" /><nd ref="1007" /><tag k="highway" v="primary" /><tag k="name" v="Arlington Boulevard" /></way>
+  <way id="5006"><nd ref="1007" /><nd ref="1008" /><tag k="highway" v="motorway" /><tag k="name" v="I-395" /></way>
+  <way id="5007"><nd ref="1008" /><nd ref="1009" /><tag k="highway" v="primary" /><tag k="name" v="George Washington Parkway" /></way>
+  <way id="5008"><nd ref="1009" /><nd ref="1010" /><tag k="highway" v="primary" /><tag k="name" v="George Washington Parkway" /></way>
+  <way id="5009"><nd ref="1010" /><nd ref="1015" /><tag k="highway" v="motorway" /><tag k="name" v="Capital Beltway" /></way>
+  <way id="5010"><nd ref="1015" /><nd ref="1014" /><tag k="highway" v="motorway" /><tag k="name" v="I-95" /></way>
+  <way id="5011"><nd ref="1003" /><nd ref="1011" /><tag k="highway" v="primary" /><tag k="name" v="Fairfax County Parkway" /></way>
+  <way id="5012"><nd ref="1011" /><nd ref="1012" /><tag k="highway" v="secondary" /><tag k="name" v="Braddock Road" /></way>
+  <way id="5013"><nd ref="1012" /><nd ref="1013" /><tag k="highway" v="primary" /><tag k="name" v="VA-234" /></way>
+  <way id="5014"><nd ref="1013" /><nd ref="1014" /><tag k="highway" v="primary" /><tag k="name" v="Prince William Parkway" /></way>
+  <way id="5015"><nd ref="1011" /><nd ref="1004" /><tag k="highway" v="primary" /><tag k="name" v="Route 123" /></way>
+  <way id="5016"><nd ref="1011" /><nd ref="1005" /><tag k="highway" v="motorway" /><tag k="name" v="I-66" /></way>
+  <way id="5017"><nd ref="1005" /><nd ref="1015" /><tag k="highway" v="motorway" /><tag k="name" v="Capital Beltway" /></way>
+  <way id="5018"><nd ref="1015" /><nd ref="1008" /><tag k="highway" v="motorway" /><tag k="name" v="I-395" /></way>
+  <way id="5019"><nd ref="1013" /><nd ref="1001" /><tag k="highway" v="primary" /><tag k="name" v="VA-28" /></way>
+  <way id="5020"><nd ref="1002" /><nd ref="1003" /><tag k="highway" v="primary" /><tag k="name" v="Waxpool Road" /></way>
+  <way id="5021"><nd ref="1005" /><nd ref="1006" /><tag k="highway" v="secondary" /><tag k="name" v="Gallows Road" /></way>
+  <way id="5022"><nd ref="1004" /><nd ref="1007" /><tag k="highway" v="motorway" /><tag k="name" v="I-66" /></way>
+  <way id="5023"><nd ref="1007" /><nd ref="1009" /><tag k="highway" v="primary" /><tag k="name" v="George Washington Parkway" /></way>
+</osm>

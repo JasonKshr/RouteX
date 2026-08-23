@@ -40,7 +40,7 @@ routing-engine/     C++ graph model, Dijkstra, A*, CLI, and unit tests
 backend/            FastAPI API layer that calls the compiled C++ engine
 frontend/           React-Leaflet frontend package for API-backed map usage
 app/                Sites-ready React demo UI for the RouteX workflow
-data/raw/           Small OSM XML sample
+data/raw/           Small Northern Virginia OSM XML sample
 data/processed/     Processed graph CSV files
 scripts/            OSM preprocessing utilities
 tests/              Render/source smoke tests for the Sites app
@@ -82,10 +82,10 @@ Example:
 routing-engine/build/routex_cli \
   --nodes data/processed/nodes.csv \
   --edges data/processed/edges.csv \
-  --start-lat 38.0356 \
-  --start-lon -78.5034 \
-  --destination-lat 38.0320 \
-  --destination-lon -78.4959 \
+  --start-lat 38.9531 \
+  --start-lon -77.4565 \
+  --destination-lat 38.8048 \
+  --destination-lon -77.0469 \
   --algorithm astar \
   --closed-roads none
 ```
@@ -104,7 +104,7 @@ The API expects the C++ engine to be built first so it can call `routing-engine/
 ## Preprocess OSM Data
 
 ```bash
-python3 scripts/preprocess_map.py data/raw/charlottesville-mini.osm --output-dir data/processed
+python3 scripts/preprocess_map.py data/raw/northern-va-landmarks.osm --output-dir data/processed
 ```
 
 For a larger real dataset, download a city or neighborhood OSM XML extract, place it in `data/raw/`, and run the same script. The script preserves drivable roads, calculates Haversine segment distances, respects one-way tags, and outputs graph-ready CSV files.

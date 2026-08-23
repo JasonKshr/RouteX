@@ -23,6 +23,15 @@ type RoadSegment = {
   bidirectional: boolean;
 };
 
+type LandmarkNode = Omit<GraphNode, "x" | "y">;
+type RoadLink = Omit<RoadSegment, "distanceMeters">;
+type MapTile = {
+  x: number;
+  y: number;
+  left: number;
+  top: number;
+};
+
 type Edge = {
   to: number;
   distanceMeters: number;
@@ -38,55 +47,107 @@ type RouteResult = {
   routeFound: boolean;
 };
 
-const GRAPH_NODES: GraphNode[] = [
-  { id: 1001, label: "Rotunda", latitude: 38.03561, longitude: -78.50341, x: 190, y: 180 },
-  { id: 1002, label: "McCormick", latitude: 38.03492, longitude: -78.50182, x: 315, y: 220 },
-  { id: 1003, label: "Library", latitude: 38.03412, longitude: -78.50021, x: 455, y: 270 },
-  { id: 1004, label: "Corner", latitude: 38.03302, longitude: -78.49876, x: 610, y: 330 },
-  { id: 1005, label: "Main St", latitude: 38.03186, longitude: -78.49748, x: 760, y: 415 },
-  { id: 1006, label: "JPA", latitude: 38.03082, longitude: -78.49942, x: 565, y: 500 },
-  { id: 1007, label: "Stadium", latitude: 38.03222, longitude: -78.50123, x: 410, y: 430 },
-  { id: 1008, label: "Emmet", latitude: 38.03328, longitude: -78.50324, x: 270, y: 375 },
-  { id: 1009, label: "Rugby", latitude: 38.03478, longitude: -78.50464, x: 140, y: 300 },
-  { id: 1010, label: "Hospital", latitude: 38.03606, longitude: -78.50107, x: 470, y: 145 },
-  { id: 1011, label: "14th St", latitude: 38.03512, longitude: -78.49898, x: 650, y: 205 },
-  { id: 1012, label: "Downtown", latitude: 38.03204, longitude: -78.4959, x: 890, y: 350 },
+const MAP_WIDTH = 1000;
+const MAP_HEIGHT = 640;
+const tileZoom = 10;
+const mapCenter = { longitude: -77.27, latitude: 38.86 };
+const visibleTileSpan = 3;
+const centerTilePoint = lonLatToTilePoint(mapCenter.longitude, mapCenter.latitude, tileZoom);
+const visibleTileOrigin = {
+  x: centerTilePoint.x - visibleTileSpan / 2,
+  y: centerTilePoint.y - visibleTileSpan / 2,
+};
+const tileOrigin = {
+  x: Math.floor(visibleTileOrigin.x),
+  y: Math.floor(visibleTileOrigin.y),
+};
+const visibleTileIndexes = [0, 1, 2, 3];
+const visibleTiles: MapTile[] = visibleTileIndexes.flatMap((row) =>
+  visibleTileIndexes.map((column) => {
+    const x = tileOrigin.x + column;
+    const y = tileOrigin.y + row;
+
+    return {
+      x,
+      y,
+      left: ((x - visibleTileOrigin.x) / visibleTileSpan) * 100,
+      top: ((y - visibleTileOrigin.y) / visibleTileSpan) * 100,
+    };
+  }),
+);
+
+const LANDMARK_NODES: LandmarkNode[] = [
+  { id: 1001, label: "Dulles Airport", latitude: 38.9531, longitude: -77.4565 },
+  { id: 1002, label: "Ashburn", latitude: 39.0438, longitude: -77.4874 },
+  { id: 1003, label: "Reston", latitude: 38.9586, longitude: -77.357 },
+  { id: 1004, label: "Tysons", latitude: 38.9187, longitude: -77.2223 },
+  { id: 1005, label: "Mosaic District", latitude: 38.872, longitude: -77.2197 },
+  { id: 1006, label: "Falls Church", latitude: 38.8823, longitude: -77.1711 },
+  { id: 1007, label: "Arlington", latitude: 38.8797, longitude: -77.1068 },
+  { id: 1008, label: "Pentagon City", latitude: 38.8629, longitude: -77.0597 },
+  { id: 1009, label: "Reagan National", latitude: 38.8512, longitude: -77.0377 },
+  { id: 1010, label: "Alexandria", latitude: 38.8048, longitude: -77.0469 },
+  { id: 1011, label: "Fairfax", latitude: 38.8462, longitude: -77.3064 },
+  { id: 1012, label: "George Mason", latitude: 38.8309, longitude: -77.3079 },
+  { id: 1013, label: "Manassas", latitude: 38.7509, longitude: -77.4753 },
+  { id: 1014, label: "Woodbridge", latitude: 38.6582, longitude: -77.2497 },
+  { id: 1015, label: "Springfield", latitude: 38.7893, longitude: -77.1872 },
 ];
 
-const ROAD_SEGMENTS: RoadSegment[] = [
-  { id: 5001, name: "McCormick Road", from: 1001, to: 1002, distanceMeters: 161.2, bidirectional: true },
-  { id: 5002, name: "McCormick Road", from: 1002, to: 1003, distanceMeters: 164.6, bidirectional: true },
-  { id: 5003, name: "University Avenue", from: 1003, to: 1004, distanceMeters: 174.8, bidirectional: true },
-  { id: 5004, name: "University Avenue", from: 1004, to: 1005, distanceMeters: 169.2, bidirectional: true },
-  { id: 5005, name: "Main Street", from: 1005, to: 1012, distanceMeters: 197.4, bidirectional: true },
-  { id: 5006, name: "Rugby Road", from: 1001, to: 1009, distanceMeters: 158.8, bidirectional: true },
-  { id: 5007, name: "Rugby Road", from: 1009, to: 1008, distanceMeters: 193.5, bidirectional: true },
-  { id: 5008, name: "Emmet Street", from: 1008, to: 1007, distanceMeters: 203.3, bidirectional: true },
-  { id: 5009, name: "Jefferson Park Avenue", from: 1007, to: 1006, distanceMeters: 223.6, bidirectional: true },
-  { id: 5010, name: "Jefferson Park Avenue", from: 1006, to: 1005, distanceMeters: 199.8, bidirectional: true },
-  { id: 5011, name: "Hospital Drive", from: 1002, to: 1010, distanceMeters: 159.5, bidirectional: true },
-  { id: 5012, name: "Hospital Drive", from: 1010, to: 1011, distanceMeters: 207.7, bidirectional: true },
-  { id: 5013, name: "14th Street", from: 1011, to: 1004, distanceMeters: 218.4, bidirectional: true },
-  { id: 5014, name: "Elliewood Connector", from: 1008, to: 1003, distanceMeters: 292.2, bidirectional: true },
-  { id: 5015, name: "Library Walk", from: 1007, to: 1003, distanceMeters: 144.5, bidirectional: true },
-  { id: 5016, name: "Monroe Lane", from: 1006, to: 1004, distanceMeters: 253.7, bidirectional: true },
-  { id: 5017, name: "Eastbound Main Street", from: 1004, to: 1012, distanceMeters: 282.6, bidirectional: false },
-];
-
+const GRAPH_NODES: GraphNode[] = LANDMARK_NODES.map((node) => ({
+  ...node,
+  ...projectMapPoint(node.longitude, node.latitude),
+}));
 const nodeById = new Map(GRAPH_NODES.map((node) => [node.id, node]));
-const tileZoom = 15;
-const centerTile = lonLatToTile(-78.5008, 38.0338, tileZoom);
-const tileOffsets = [-1, 0, 1];
 
-function lonLatToTile(longitude: number, latitude: number, zoom: number) {
+const ROAD_LINKS: RoadLink[] = [
+  { id: 5001, name: "Dulles Greenway", from: 1002, to: 1001, bidirectional: true },
+  { id: 5002, name: "Dulles Toll Road", from: 1001, to: 1003, bidirectional: true },
+  { id: 5003, name: "Dulles Toll Road", from: 1003, to: 1004, bidirectional: true },
+  { id: 5004, name: "Route 7", from: 1004, to: 1006, bidirectional: true },
+  { id: 5005, name: "Arlington Boulevard", from: 1006, to: 1007, bidirectional: true },
+  { id: 5006, name: "I-395", from: 1007, to: 1008, bidirectional: true },
+  { id: 5007, name: "George Washington Parkway", from: 1008, to: 1009, bidirectional: true },
+  { id: 5008, name: "George Washington Parkway", from: 1009, to: 1010, bidirectional: true },
+  { id: 5009, name: "Capital Beltway", from: 1010, to: 1015, bidirectional: true },
+  { id: 5010, name: "I-95", from: 1015, to: 1014, bidirectional: true },
+  { id: 5011, name: "Fairfax County Parkway", from: 1003, to: 1011, bidirectional: true },
+  { id: 5012, name: "Braddock Road", from: 1011, to: 1012, bidirectional: true },
+  { id: 5013, name: "VA-234", from: 1012, to: 1013, bidirectional: true },
+  { id: 5014, name: "Prince William Parkway", from: 1013, to: 1014, bidirectional: true },
+  { id: 5015, name: "Route 123", from: 1011, to: 1004, bidirectional: true },
+  { id: 5016, name: "I-66", from: 1011, to: 1005, bidirectional: true },
+  { id: 5017, name: "Capital Beltway", from: 1005, to: 1015, bidirectional: true },
+  { id: 5018, name: "I-395", from: 1015, to: 1008, bidirectional: true },
+  { id: 5019, name: "VA-28", from: 1013, to: 1001, bidirectional: true },
+  { id: 5020, name: "Waxpool Road", from: 1002, to: 1003, bidirectional: true },
+  { id: 5021, name: "Gallows Road", from: 1005, to: 1006, bidirectional: true },
+  { id: 5022, name: "I-66", from: 1004, to: 1007, bidirectional: true },
+  { id: 5023, name: "George Washington Parkway", from: 1007, to: 1009, bidirectional: true },
+];
+
+const ROAD_SEGMENTS: RoadSegment[] = ROAD_LINKS.map((road) => ({
+  ...road,
+  distanceMeters: routeDistanceMeters(road.from, road.to),
+}));
+
+function lonLatToTilePoint(longitude: number, latitude: number, zoom: number) {
   const scale = 2 ** zoom;
-  const x = Math.floor(((longitude + 180) / 360) * scale);
-  const y = Math.floor(
+  const x = ((longitude + 180) / 360) * scale;
+  const y =
     ((1 - Math.log(Math.tan((latitude * Math.PI) / 180) + 1 / Math.cos((latitude * Math.PI) / 180)) / Math.PI) /
       2) *
-      scale,
-  );
+    scale;
   return { x, y };
+}
+
+function projectMapPoint(longitude: number, latitude: number) {
+  const point = lonLatToTilePoint(longitude, latitude, tileZoom);
+
+  return {
+    x: ((point.x - visibleTileOrigin.x) / visibleTileSpan) * MAP_WIDTH,
+    y: ((point.y - visibleTileOrigin.y) / visibleTileSpan) * MAP_HEIGHT,
+  };
 }
 
 function haversineMeters(from: GraphNode, to: GraphNode) {
@@ -100,6 +161,17 @@ function haversineMeters(from: GraphNode, to: GraphNode) {
     Math.cos(lat1) * Math.cos(lat2) * Math.sin(deltaLon / 2) ** 2;
 
   return radius * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+function routeDistanceMeters(fromId: number, toId: number) {
+  const from = nodeById.get(fromId);
+  const to = nodeById.get(toId);
+
+  if (!from || !to) {
+    throw new Error(`Unknown road endpoint: ${fromId} -> ${toId}`);
+  }
+
+  return Math.round(haversineMeters(from, to));
 }
 
 function buildAdjacency(closedRoadIds: Set<number>) {
@@ -229,7 +301,7 @@ function describeNode(id: number) {
 
 export default function Home() {
   const [startId, setStartId] = useState(1001);
-  const [destinationId, setDestinationId] = useState(1012);
+  const [destinationId, setDestinationId] = useState(1010);
   const [selectionTarget, setSelectionTarget] = useState<SelectionTarget>("start");
   const [algorithm, setAlgorithm] = useState<Algorithm>("astar");
   const [showExplored, setShowExplored] = useState(true);
@@ -362,23 +434,26 @@ export default function Home() {
         aria-label="Interactive route map"
       >
         <div className="tile-layer" aria-hidden="true">
-          {tileOffsets.flatMap((offsetY) =>
-            tileOffsets.map((offsetX) => (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                key={`${offsetX}-${offsetY}`}
-                alt=""
-                src={`https://tile.openstreetmap.org/${tileZoom}/${centerTile.x + offsetX}/${centerTile.y + offsetY}.png`}
-                style={{
-                  left: `${((offsetX + 1) / 3) * 100}%`,
-                  top: `${((offsetY + 1) / 3) * 100}%`,
-                }}
-              />
-            )),
-          )}
+          {visibleTiles.map((tile) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              key={`${tile.x}-${tile.y}`}
+              alt=""
+              src={`https://tile.openstreetmap.org/${tileZoom}/${tile.x}/${tile.y}.png`}
+              style={{
+                left: `${tile.left}%`,
+                top: `${tile.top}%`,
+              }}
+            />
+          ))}
         </div>
 
-        <svg className="road-layer" viewBox="0 0 1000 640" role="img" aria-label="RouteX road graph">
+        <svg
+          className="road-layer"
+          viewBox={`0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`}
+          role="img"
+          aria-label="RouteX road graph"
+        >
           {ROAD_SEGMENTS.map((road) => {
             const from = nodeById.get(road.from);
             const to = nodeById.get(road.to);
@@ -443,9 +518,10 @@ export default function Home() {
                 key={node.id}
                 type="button"
                 className={isStart ? "map-node start" : isDestination ? "map-node destination" : "map-node"}
-                style={{ left: `${node.x / 10}%`, top: `${node.y / 6.4}%` }}
+                style={{ left: `${(node.x / MAP_WIDTH) * 100}%`, top: `${(node.y / MAP_HEIGHT) * 100}%` }}
                 onClick={() => selectNode(node.id)}
                 aria-label={`Select ${node.label} as ${selectionTarget}`}
+                title={node.label}
               >
                 <span>{isStart ? "S" : isDestination ? "D" : ""}</span>
               </button>
@@ -458,7 +534,7 @@ export default function Home() {
           <span>
             {closureMode
               ? "Click a road segment to close or reopen it."
-              : "Click a node on the map to update the selected endpoint."}
+              : "Click a landmark on the map to update the selected endpoint."}
           </span>
           {closureMode ? (
             <em>
@@ -488,7 +564,7 @@ export default function Home() {
             <div>
               <dt>Road graph</dt>
               <dd>
-                {GRAPH_NODES.length} nodes / {ROAD_SEGMENTS.length} roads
+                {GRAPH_NODES.length} NoVA landmarks / {ROAD_SEGMENTS.length} roads
               </dd>
             </div>
           </dl>

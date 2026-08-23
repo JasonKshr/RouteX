@@ -46,6 +46,10 @@ test("ships RouteX architecture and algorithm source", async () => {
   ]);
 
   assert.match(page, /<h1>RouteX<\/h1>/);
+  assert.match(page, /Dulles Airport/);
+  assert.match(page, /Tysons/);
+  assert.match(page, /Alexandria/);
+  assert.match(page, /NoVA landmarks/);
   assert.match(page, /calculateRoute/);
   assert.match(page, /Closure mode/);
   assert.match(page, /Algorithm Comparison/);
@@ -55,7 +59,10 @@ test("ships RouteX architecture and algorithm source", async () => {
   assert.match(astar, /heuristic/);
   assert.match(dijkstra, /std::priority_queue/);
   assert.match(api, /FastAPI/);
-  assert.doesNotMatch(page, /AES-GCM|PBKDF2|indexedDB|OpenStreetMap route engine|C\+\+ Dijkstra \+ A\*/);
+  assert.doesNotMatch(
+    page,
+    /AES-GCM|PBKDF2|indexedDB|OpenStreetMap route engine|C\+\+ Dijkstra \+ A\*|Rotunda|McCormick Road/,
+  );
 });
 
 test("keeps closure-mode road edges clickable", async () => {
