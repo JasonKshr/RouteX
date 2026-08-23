@@ -48,10 +48,20 @@ tests/              Render/source smoke tests for the Sites app
 
 ## Run The Sites Demo
 
+RouteX needs Node.js 22.13.0 or newer. Check your version first:
+
+```bash
+node -v
+```
+
+If you see Node 18, install Node 22 LTS or newer, reopen Terminal, and run the commands below.
+
 ```bash
 npm install
 npm run dev
 ```
+
+Do not run `npm audit fix` just to start the project. It can upgrade beta framework packages into an incompatible set. Use the committed `package-lock.json` unless you are intentionally doing dependency maintenance.
 
 The main demo lets you select start and destination nodes, switch between A* and Dijkstra, show explored nodes, compare algorithm performance, and close road segments to force a reroute.
 
