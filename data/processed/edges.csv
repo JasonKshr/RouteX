@@ -1,0 +1,18 @@
+source,destination,distance,road_id,bidirectional,name
+1001,1002,161.2,5001,true,McCormick Road
+1002,1003,164.6,5002,true,McCormick Road
+1003,1004,174.8,5003,true,University Avenue
+1004,1005,169.2,5004,true,University Avenue
+1005,1012,197.4,5005,true,Main Street
+1001,1009,158.8,5006,true,Rugby Road
+1009,1008,193.5,5007,true,Rugby Road
+1008,1007,203.3,5008,true,Emmet Street
+1007,1006,223.6,5009,true,Jefferson Park Avenue
+1006,1005,199.8,5010,true,Jefferson Park Avenue
+1002,1010,159.5,5011,true,Hospital Drive
+1010,1011,207.7,5012,true,Hospital Drive
+1011,1004,218.4,5013,true,14th Street
+1008,1003,292.2,5014,true,Elliewood Connector
+1007,1003,144.5,5015,true,Library Walk
+1006,1004,253.7,5016,true,Monroe Lane
+1004,1012,282.6,5017,false,Eastbound Main Street

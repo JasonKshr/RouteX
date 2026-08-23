@@ -1,0 +1,33 @@
+body {
+  margin: 0;
+  font-family: Inter, system-ui, sans-serif;
+}
+
+main {
+  display: grid;
+  gap: 1rem;
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+.route-map {
+  min-height: 62vh;
+}
+
+.route-controls,
+.stats-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+}
+
+.comparison-table {
+  border-collapse: collapse;
+}
+
+.comparison-table th,
+.comparison-table td {
+  padding: 0.55rem 0.75rem;
+  border: 1px solid #d8dee4;
+}
