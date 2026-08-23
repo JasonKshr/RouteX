@@ -73,6 +73,7 @@ test("keeps closure-mode road edges clickable", async () => {
 
   assert.match(page, /closure-active/);
   assert.match(page, /road-hit-target is-closed/);
+  assert.match(page, /preserveAspectRatio="none"/);
   assert.match(styles, /\.node-layer\s*\{[\s\S]*pointer-events:\s*none;/);
   assert.match(styles, /\.map-node\s*\{[\s\S]*pointer-events:\s*auto;/);
   assert.match(styles, /\.road-hit-target\s*\{[\s\S]*pointer-events:\s*stroke;/);

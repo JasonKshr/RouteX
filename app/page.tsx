@@ -451,6 +451,7 @@ export default function Home() {
         <svg
           className="road-layer"
           viewBox={`0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`}
+          preserveAspectRatio="none"
           role="img"
           aria-label="RouteX road graph"
         >
