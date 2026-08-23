@@ -361,7 +361,10 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="map-stage" aria-label="Interactive route map">
+      <section
+        className={closureMode ? "map-stage closure-active" : "map-stage"}
+        aria-label="Interactive route map"
+      >
         <div className="tile-layer" aria-hidden="true">
           {tileOffsets.flatMap((offsetY) =>
             tileOffsets.map((offsetX) => (
@@ -398,7 +401,7 @@ export default function Home() {
                   y2={to.y}
                 />
                 <line
-                  className="road-hit-target"
+                  className={isClosed ? "road-hit-target is-closed" : "road-hit-target"}
                   x1={from.x}
                   y1={from.y}
                   x2={to.x}

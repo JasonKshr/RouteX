@@ -293,6 +293,19 @@ h2 {
   cursor: pointer;
 }
 
+.closure-active .road-hit-target {
+  stroke: rgba(14, 128, 101, 0.16);
+}
+
+.closure-active .road-hit-target:hover,
+.closure-active .road-hit-target:focus {
+  stroke: rgba(14, 128, 101, 0.32);
+}
+
+.closure-active .road-hit-target.is-closed {
+  stroke: rgba(194, 65, 12, 0.2);
+}
+
 .route-line {
   fill: none;
   stroke: var(--green);
@@ -311,6 +324,7 @@ h2 {
 
 .node-layer {
   z-index: 2;
+  pointer-events: none;
 }
 
 .map-node {
@@ -325,6 +339,7 @@ h2 {
   color: #fff;
   font-size: 0.7rem;
   font-weight: 900;
+  pointer-events: auto;
 }
 
 .map-node.start {

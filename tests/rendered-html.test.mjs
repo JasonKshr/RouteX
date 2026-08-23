@@ -57,3 +57,17 @@ test("ships RouteX architecture and algorithm source", async () => {
   assert.match(api, /FastAPI/);
   assert.doesNotMatch(page, /AES-GCM|PBKDF2|indexedDB/);
 });
+
+test("keeps closure-mode road edges clickable", async () => {
+  const [page, styles] = await Promise.all([
+    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(page, /closure-active/);
+  assert.match(page, /road-hit-target is-closed/);
+  assert.match(styles, /\.node-layer\s*\{[\s\S]*pointer-events:\s*none;/);
+  assert.match(styles, /\.map-node\s*\{[\s\S]*pointer-events:\s*auto;/);
+  assert.match(styles, /\.road-hit-target\s*\{[\s\S]*pointer-events:\s*stroke;/);
+  assert.match(styles, /\.route-line\s*\{[\s\S]*pointer-events:\s*none;/);
+});
